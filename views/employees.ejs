@@ -1,0 +1,122 @@
+<div class="container mt-4">
+      <div class="d-flex justify-content-between">
+            <span class="badge text-dark py-0">Employees</span>
+            <%-include('modal_adduser')%>
+                  <%-include('modal_addtask')%>
+                        <button onclick="show_modal_adduser()" id="id-user-add"
+                              class="rounded-5 btn btn-sm btn-outline-dark"><i class="fa fa-plus-circle"></i>
+                              Add New Employee</button>
+      </div>
+      <table class="table" style="min-height: 400px;">
+            <thead>
+                  <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Designation</th>
+                        <th scope="col">Action</th>
+                        <th scope="col">Action</th>
+                        <th scope="col">Action</th>
+                  </tr>
+            </thead>
+            <tbody>
+                  <% if(typeof data !=='undefined' ){ for(let i=0;i<data.length;i++){ %>
+                        <tr>
+                              <th scope="row">
+                                    <%=i+1%>
+                              </th>
+                              <td>
+                                    <%=data[i].name%>
+                              </td>
+                              <td>
+                                    <%=data[i].email %>
+                              </td>
+                              <td>
+                                    <%=data[i].designation %>
+                              </td>
+                              <td> <button onclick="show_modal_addtask(`<%=data[i].name%>`,`<%=data[i].designation %>`)"
+                                          class="bg-info bg-opacity-25 btn btn-sm py-0">Assign new task</button></td>
+                              <td> <a href="/tasks/<%=data[i].id%>" class="text-decoration-none"><i
+                                                class="fa-solid fa-list-ol me-1"></i>Current Tasks</a></td>
+                              <td> <a href="/users/remove/<%=data[i].id%>" class="text-decoration-none text-danger"><i
+                                                class="fa-solid fa-trash me-1"></i>Remove User</a></td>
+                        </tr>
+                        <% } %>
+                              <% }%>
+            </tbody>
+      </table>
+      <div class="d-flex gap-1 mt-1  " style=" height: 30px;">
+            <form id="employee_pagenumbform" action="/employees" method="get">
+                  <button onclick="pageDown()" class="border-0   bg-black bg-opacity-10 badge ">Page-=1</button>
+                  <input id="employee_pagenumb" style="width: 45px;" onchange="pageNumbSubmit()" name="pagenumb"
+                        class=" border-0 text-center fw-bold bg-success bg-opacity-10 rounded-pill" value=<%=skip /
+                        limit + 1%> > <button onclick="pageUp()" style="width: 60px;"
+                        class=" border-0 bg-black bg-opacity-10 badge">Page+=1 </button>
+            </form>
+            <span class=" text-black-75 d-block text-start text-capitalize ms-1">
+                  <%=Math.ceil(count /limit)%> Pages, <%=count%> Rows
+            </span>
+      </div>
+      <script>
+
+            function pageNumbSubmit() {
+                  console.log(document.getElementById('employee_pagenumb').value)
+                  if (document.getElementById('employee_pagenumb').value > 0) {
+                        document.getElementById("employee_pagenumbform").submit();
+                  }
+            }
+            function pageUp() {
+                  document.getElementById('employee_pagenumb').value = Number(document.getElementById('employee_pagenumb').value) + 1
+            }
+
+            function pageDown() {
+                  if (document.getElementById('employee_pagenumb').value > 1) {
+                        document.getElementById('employee_pagenumb').value = Number(document.getElementById('employee_pagenumb').value) - 1
+                  }
+            }
+
+            function show_modal_adduser() {
+                  document.getElementById('add-modal-user').style.display = 'block'
+            }
+            function show_modal_addtask(name, designation) {
+                  console.log(name + "  <><> " + designation);
+                  document.getElementById('add-modal-task').style.display = 'block';
+                  document.getElementById('id_assign_to').innerText = name + ", (" + designation + ")";
+
+            }
+
+            function check_submit() {
+                  const role = document.getElementById("id_selectedrole").value;
+                  const email = document.getElementById("id_adduser_email").value;
+                  console.log(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) + "   <><> " + email);
+                  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) == false) {
+                        document.getElementById("id_msg_adduser").innerText = "Invalid email !"
+                  }
+                  else if (role == 'none') {
+                        document.getElementById("id_msg_adduser").innerText = "select a role plz"
+
+                  } else {
+                        document.getElementById("id_form_adduser").submit();
+                  } setTimeout(() => {
+                        document.getElementById("id_msg_adduser").innerText = ""
+                  }, 3000);
+
+            }
+
+            window.onclick = function (event) {
+                  let addmodal = document.getElementById('add-modal-user');
+                  let modal2 = document.getElementById('add-modal-task')
+                  let modal3 = document.getElementById('dlt-modal')
+                  if (event.target == addmodal) {
+                        addmodal.style.display = "none ";
+                  }
+                  if (event.target == modal2) {
+                        modal2.style.display = "none ";
+                  }
+                  if (event.target == modal3) {
+                        modal3.style.display = "none ";
+                  }
+            }
+
+      </script>
+</div>

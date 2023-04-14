@@ -1,0 +1,24 @@
+<div class="container-fluid d-flex justify-content-between pt-2 pb-1 shadow-sm bg-success bg-opacity-25 ">
+      <div>
+            <a href="/" class="text-decoration-none"><span class="fw-bold fs-5 text-dark"><i
+                              class="fa-solid fa-list-check me-1 text-danger"></i>Task Manager</span></a>
+      </div>
+      <ul class="d-flex justify-content-end pe-5 list-unstyled gap-4 pt-1 pb-0">
+            <%if(auth_status=="null"){%>
+                  <li><a href="/auth/signin" class="text-decoration-none">Log In</a></li>
+                  <%}else if(auth_status=="logged-in" && role=="task-creator" ){%>
+                        <li>
+                              <%=name%> (<%=designation%>)
+                        </li>
+                        <li><a href="/employees" class="text-decoration-none">My Employees</a></li>
+                        <li><a href="/tasks" class="text-decoration-none">Assigned-Tasks</a></li>
+                        <li><a href="/auth/signout" class="text-decoration-none">Logout</a></li>
+                        <% }else if(auth_status=="logged-in" && role=="employee" ){%>
+                              <li>
+                                    <%=name%> (<%=designation%>)
+                              </li>
+                              <li><a href="/tasks" class="text-decoration-none">My-Tasks</a></li>
+                              <li><a href="/auth/signout" class="text-decoration-none">Logout</a></li>
+                              <%} %>
+      </ul>
+</div>

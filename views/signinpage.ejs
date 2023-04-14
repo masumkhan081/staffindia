@@ -1,0 +1,24 @@
+<div class="container row mt-5 d-flex justify-content-around">
+      <div class="col-md-5 mt-3 pb-4 col-sm-6 rounded-3 ">
+            <span class="badge bg-success bg-opacity-25 d-block text-center mb-2 text-muted rounded">User Log in</span>
+            <form action="/auth/signin" method="POST">
+                  <div class=" form-group my-3  ">
+                        <label for=" email " class=" float-start ">Email</label>
+                        <input type="email" name="username" required id="email" class=" form-control text-center "
+                              placeholder=" Enter email " value=" masumkhan081@gmail.com " />
+                  </div>
+                  <div class=" form-group mb-2  ">
+                        <label for=" password " class=" float-start  ">Password</label> <input type=" password "
+                              name="password" required class=" form-control text-center " placeholder=" Password ? "
+                              value="<%=typeof password !='undefined' ? password : 'p123456'%>" />
+                  </div>
+                  <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-sm fw-bold bg-success bg-opacity-50 mt-2 rounded w-50  ">
+                              Login </button>
+                  </div>
+                  <span class="d-block text-start my-2 text-danger">
+                        <!-- <%= "msg" %> -->
+                  </span>
+            </form>
+      </div>
+</div>

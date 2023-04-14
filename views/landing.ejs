@@ -1,0 +1,77 @@
+
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between">
+            <span class="badge bg-dark">Task List</span>
+            <%-include('addmodal')%>
+                <button onclick="show_addmodal()" id="id-drug-add"
+                    class="rounded-5 btn btn-sm bg-primary bg-opacity-25"><i class="fa fa-plus-circle"></i> nnNew
+                    Task</button>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Task Name</th>
+                    <th scope="col">Assign By</th>
+                    <th scope="col">Assign Time</th>
+                    <th scope="col">Due Date</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                    <th scope="col">Action</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if(typeof tasks !=='undefined' ){ for(let i=0;i<tasks.length;i++){ %>
+                    <tr>
+                        <th scope="row">
+                            <%=i+1%>
+                        </th>
+                        <td>
+                            <%=tasks[i].taskName%>
+                        </td>
+                        <td>
+                            <%=tasks[i].assignBy %>
+                        </td>
+                        <td>
+                            <%=tasks[i].assignTime %>
+                        </td>
+                        <td>
+                            <%=tasks[i].dueTime %>
+                        </td>
+                        <td>
+                            <%=tasks[i].status %>
+                        </td>
+                        <td> <a href="/Description"> Description</a></td>
+                        <td> <a href="/Description"><i class="fa-solid fa-pen-to-square me-1"></i>Edit</a></td>
+                        <td> <a href="/Description"><i class="fa-solid fa-trash me-1"></i>Delete</a></td>
+                    </tr>
+                    <% } %>
+                        <% }%>
+            </tbody>
+        </table>
+        <script>
+
+            function show_addmodal() {
+                document.getElementById('add-modal').style.display = 'block'
+            }
+
+
+
+            window.onclick = function (event) {
+                let addmodal = document.getElementById('add-modal');
+                let edtmodal = document.getElementById('edt-modal')
+                let dltmodal = document.getElementById('dlt-modal')
+                if (event.target == addmodal) {
+                    addmodal.style.display = "none ";
+                }
+                if (event.target == edtmodal) {
+                    edtmodal.style.display = "none ";
+                }
+                if (event.target == dltmodal) {
+                    dltmodal.style.display = "none ";
+                }
+            }
+
+        </script>
+    </div>

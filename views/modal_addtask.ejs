@@ -1,0 +1,37 @@
+<div id="add-modal-task" class="modal mt-5 rounded  ">
+  <div class="modal-dialog " role="document ">
+    <div class="modal-content bg-light">
+      <div class="modal-body py-4 rounded-3  bg-info bg-opacity-10">
+        <form action="tasks/add" method="post">
+          <div class="mb-3" aria-disabled="true">
+            <span class="mark text-dark">Assigned Employee:</span><span id="id_assign_to" class="badge text-dark">
+            </span>
+          </div>
+          <input style="display: none;" type="text" name="to" value=""
+            class=" text-success text-center rounded-3 border-0">
+          <div class="mb-2">
+            <label for="taskname">Task Name</label> <br>
+            <input type="text" required name="taskname" value="tn" class="w-75 text text-center rounded-3 border-0">
+          </div>
+          <div class="mb-2">
+            <label for="assigntime">Assign Time</label> <br>
+            <input type="text" name="date" value="at" class=" w-75 text text-center rounded-3 border-0 ">
+          </div>
+          <div class="mb-2">
+            <label for="duetime">Due Time</label> <br>
+            <input type="text" name="duedate" value="dt" class="w-75 text text-center rounded-3 border-0">
+          </div>
+          <div class="mb-4">
+            <label for="detail">Detail</label> <br>
+            <textarea class="form-control" name="detail" rows="2">det</textarea>
+          </div>
+          <button type="submit"
+            class="btn btn-sm fst-italic fw-bold shadow-sm w-25 float-end border-success">Save</button>
+        </form>
+        <button onclick="document.getElementById('add-modal-task').style.display='none'"
+          class="mt-0 fw-bold fst-italic btn btn-sm shadow-sm w-25 rounded float-start  border-success  "> Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<div id="add-modal-user" class="modal mt-5 rounded  ">
+  <div class="modal-dialog " role="document ">
+    <div class="modal-content bg-light">
+      <div class="modal-body py-4 rounded-3  bg-success bg-opacity-10">
+        <span id="id_msg_adduser" class="float-end text-danger fw-bold"></span>
+        <form id="id_form_adduser" action="/employees/adduser" method="post">
+          <div class="mb-3">
+            <label for="email">Email</label> <br>
+            <input required id="id_adduser_email"  type="email"  name="email"
+            value="study.contents.of.masumkhan@gmail.com"
+              class=" form-control text text-center rounded-3 border-0  ">
+          </div>
+          <div class="mb-3">
+            <select class="form-select border-0" name="role" required id="id_selectedrole">
+              <option disabled   value="none">Select One Role</option>
+              <option value="task-creator">Task Creator</option>
+              <option selected value="employee">Just Employee</option>
+            </select>
+          </div>
+        </form>
+        <button onclick="check_submit()" class="btn btn-sm bg-success bg-opacity-25 fw-bold w-75">Send Invitation Mail</button>
+        <button onclick="document.getElementById('add-modal-user').style.display='none'"
+          class="mt-3 fw-bold fst-italic btn btn-sm bg-dark bg-opacity-25 w-75 rounded "> Cancel </button>
+      </div>
+    </div>
+  </div>
+</div>
