@@ -14,10 +14,12 @@
 </head>
 
 <body class="bg-info bg-opacity-10" style="height: 100%;">
-    <%-include("header") %>
+    <%-include("_header") %>
         <%- body %>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js "></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.min.js "></script>
+            <%-include("_footer") %>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js "></script>
+                <script
+                    src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.min.js "></script>
 </body>
 
 </html>

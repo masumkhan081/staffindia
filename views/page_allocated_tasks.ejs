@@ -1,0 +1,158 @@
+<div class="container mt-3  h-100" style="min-height: 480px;">
+      <div class="d-flex flex-wrap flex-row py-0">
+            <div class="d-flex gap-5 w-100">
+                  <form id="tasks_pagenumbform" action=<%=render_what=="allocated-tasks"
+                        ?"/tasks/allocated-tasks":"/tasks/my-tasks"%> method="get"> <button onclick="pageDown()"
+                              style="  height: 22px;" class=" rounded-3 border-0 bg-success bg-opacity-25 "><i
+                                    class="fa-solid fa-minus"></i></button>
+                        <input id="tasks_pagenumb" style="width: 45px; height: 22px;" onchange="pageNumbSubmit()"
+                              name="pagenumb" class=" rounded-3 border-0 text-center fw-bold bg-success bg-opacity-10  "
+                              value=<%=skip / limit + 1%> > <button onclick="pageUp()" style=" height: 22px;"
+                              class="  rounded-3 border-0 bg-success bg-opacity-25"><i class="fa-solid fa-plus"></i>
+                        </button>
+                  </form>
+                  <span class=" py-0 d-block text-success text-uppercase ms-1">
+                        <span class="badge bg-success fw-bold">Total</span>
+                        <%=Math.ceil(count /limit)%> Pages, <%=count%> Tasks
+                  </span>
+                  <span class="ms-5 fw-bold text-primary" style="min-width: 200px;" id="id_msg">
+                        <%=msg%>
+                  </span>
+            </div>
+      </div>
+      <div class="d-flex gap-4 flex-wrap justify-content-start mt-4">
+            <%for(let i=0;i<tasks.length;i++){%>
+                  <div style="min-height: 100px; min-width: 350px; max-width: 400px;"
+                        class="shadow-sm rounded-3 bg-light bg-opacity-10 mh-100">
+                        <div class="d-flex justify-content-between w-100  rounded-3 bg-success bg-opacity-25">
+                              <span class=" fw-bold py-0 mt-0 bg-info bg-opacity-25 rounded-pill text-dark px-2  ">
+                                    <%=i+1%>
+                              </span>
+                              <span class="text-decoration-none text-success text-center text-uppercase flex-grow-1">
+                                    <%if(tasks[i].status=="complete"){ %>
+                                          <i class="fa-solid fa-check"></i>
+                                          <%}%>
+                                                <%=tasks[i].status%>
+                              </span>
+                              <%if(render_what=="allocated-tasks"){%>
+                                    <button onclick="show_dlt_modal(`<%=tasks[i].id%>`)"
+                                          class=" fw-bold btn btn-sm py-0 fs-6 text-danger rounded-3"><i
+                                                class="fa-solid fa-trash"></i> </button>
+                                    <% }%>
+                        </div>
+                        <ul class="list-unstyled px-1">
+                              <li>
+                                    <span class="badge text-dark">Task Name:</span>
+                                    <%=tasks[i].task_name%>
+                              </li>
+                              <%if(render_what=="my-tasks"){%>
+                                    <li><span class="badge text-dark">Mark As:</span>
+                                          <%["seen","ongoing","complete"].filter(item=>{ if(item!=tasks[i].status){%> <a
+                                                      href="/tasks/my-tasks/update/<%=tasks[i].id%>/<%=item%>"
+                                                      class="text-decoration-none bg-success bg-opacity-10 rounded text-capitalize me-2">
+                                                      <%=item%>
+                                                </a>
+                                                <% }})%>
+                                    </li>
+                                    <% }%>
+                                          <li>
+                                                <span class="badge text-dark">Assigned By:</span>
+                                                <%=tasks[i].by_name%>
+                                          </li>
+                                          <li>
+                                                <span class="badge text-dark">Assigned To:</span>
+                                                <%=tasks[i].to_name%>
+                                          </li>
+                                          <li>
+                                                <span class="badge text-dark">Assigned Time:</span>
+                                                <%=tasks[i].assign_time%>
+                                          </li>
+                                          <li>
+                                                <span class="badge text-dark">Completion Time:</span>
+                                                <%=tasks[i].completion_time%>
+                                          </li>
+                                          <li>
+                                                <span class="badge text-dark">Seen Time:</span>
+                                                <%=tasks[i].seen_time%>
+                                          </li>
+                                          <li>
+                                                <span class="badge text-dark">Init Time:</span>
+                                                <%=tasks[i].starting_time%>
+                                          </li>
+                                          <li>
+                                                <span class="badge text-dark">Due Time:</span>
+                                                <%=tasks[i].due_time%>
+                                          </li>
+                                          <li>
+                                                <div class="mt-1">
+                                                      <button type="button"
+                                                            class="btn btn-sm text-primary fw-bold fst-italic py-0"
+                                                            data-bs-toggle="collapse"
+                                                            data-bs-target="#demo<%=i%>">Detail ...</button>
+                                                      <div id="demo<%=i%>" class="collapse text-wrap">
+                                                            <%=tasks[i].detail%>
+                                                      </div>
+                                                </div>
+                                          </li>
+                        </ul>
+                  </div>
+                  <%}%>
+      </div>
+      <div id="dlt-modal-task" class="modal mt-5 rounded  ">
+            <div class="modal-dialog " role="document ">
+                  <div class="modal-content bg-light">
+                        <div class="modal-body py-4 rounded-3 bg-info bg-opacity-10">
+                              <div class="modal-body py-4 rounded-3">
+                                    <form action="/tasks/allocated-tasks/delete" method="post">
+                                          <input type="hidden" id="dlt_task_pagenumb" name="pagenumb" value=<%=skip /
+                                                limit + 1%> > <input hidden type="text" id="dlt_taskid" value=""
+                                                name="taskid" />
+                                          <span
+                                                class="shadow-sm badge bg-secondary bg-opacity-75 text-warning d-block mb-4 pb-1 text-center">Sure
+                                                About Deletion ? </span>
+                                          <button type="submit"
+                                                class=" mb-3 btn btn-sm btn-danger w-25 rounded ">Delete</button>
+                                    </form>
+                                    <button onclick="document.getElementById('dlt-modal-task').style.display='none'"
+                                          class="mt-0 fw-bold fst-italic btn btn-sm shadow-sm w-25 rounded float-start  border-success  ">
+                                          Cancel </button>
+                              </div>
+                        </div>
+                  </div>
+            </div>
+      </div>
+      <script>
+            function pageNumbSubmit() {
+                  let numb = document.getElementById('tasks_pagenumb').value;
+                  let elmnt = document.getElementById('tasks_pagenumb')
+                  if (numb > 0 && Number.isNaN(numb) == false) {
+                        document.getElementById("tasks_pagenumbform").submit();
+                  }
+                  else {
+                        elmnt.value = 1;
+                        document.getElementById("tasks_pagenumbform").submit();
+                  }
+            }
+            function pageUp() {
+                  let numb = document.getElementById('tasks_pagenumb').value;
+                  let elmnt = document.getElementById('tasks_pagenumb');
+                  elmnt.value = Number(numb) + 1
+            }
+            function pageDown() {
+                  if (document.getElementById('tasks_pagenumb').value > 1) {
+                        document.getElementById('tasks_pagenumb').value = Number(document.getElementById('tasks_pagenumb').value) - 1
+                  }
+            }
+
+            setTimeout(() => {
+                  const idmsg = "id_msg";
+                  document.getElementById(idmsg).innerHTML = " "
+            }, 3000)
+
+            function show_dlt_modal(taskid) {
+                  document.getElementById("dlt_taskid").value = taskid
+                  document.getElementById('dlt-modal-task').style.display = 'block'
+            }
+
+      </script>
+</div>

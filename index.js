@@ -32,14 +32,14 @@ app.use(
     secret: process.env.SESSION_SECRET,
     saveUninitialized: true,
     cookie: { maxAge: oneDay },
-    resave: false,
+    resave: true,
   })
 );
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.use("", require("./routes/basic"));
+//
 app.use("", require("./routes/auth"));
-app.use("/employees", require("./routes/employee"));
+app.use("", require("./routes/user"));
 app.use("", require("./routes/task"));
+// npm start

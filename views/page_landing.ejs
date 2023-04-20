@@ -1,0 +1,54 @@
+<div class="container-fluid row mt-sm-4 mt-1" style="min-height: 480px;">
+      <!--start col-1 -->
+      <div class="col-md-3 d-flex flex-column gap-sm-5">
+            <div>
+                  <span class="rounded text-success pb-1 h6">
+                        <i class="fas fa-th-list"></i> Whats Been Used: </span>
+                  <ul class="mt-2 list-unstyled d-flex flex-column gap-sm-2 gap-1 text-wrap">
+                        <span class="text-center text-success rounded bg-success bg-opacity-10">nodemailer</span>
+                        <span class="text-center text-success rounded bg-success bg-opacity-10">passport</span>
+                        <span class="text-center text-success rounded bg-success bg-opacity-10">express-session</span>
+                        <span class="text-center text-success rounded bg-success bg-opacity-10">json-web-token</span>
+                        <li class="text-center text-success rounded bg-success bg-opacity-10">mongoose, MongoDB Atlas
+                        </li>
+                  </ul>
+            </div>
+            <div>
+                  <%if(auth_status=="null"){%>
+                        <span>Go To<a href="/auth/signin" class="mx-1 text-decoration-none">Sign In</a>Page</span>
+                        <%} %>
+            </div>
+      </div>
+      <!--start col-2 -->
+      <div class="col-md-9 ">
+            <span class="rounded text-success pb-1 h6">
+                  <i class="fas fa-hand-point-right"></i> Read Me </span>
+            <ul class="d-flex flex-column gap-1 text-wrap text-start ps-4 align-content-between list-unstyled">
+                  <li>
+                  <li class="rounded"><strong>Objectives: </strong></li>
+                  <ul>
+                        <li>Implementation of a task deistribution system for soft. developers </li>
+                  </ul>
+                  </li>
+                  <li>
+                  <li>
+                  <li class="rounded"><strong>Brief: </strong></li>
+                  <ul>
+                        <li></li>
+                        <li></li>
+                        <li>Create & Assign Task</li>
+                        <li>Inviting new team member sending - "link + JWT-token" over mail</li>
+                        <li>predefined role & designation while sending signup link</li>
+                  </ul>
+                  </li>
+                  <li>
+                  <li class="rounded"><strong>Limitation: </strong></li>
+                  <ul>
+                        <li>Due date, assigned date, and completion dat should not be text. To be updated soon</li>
+                  </ul>
+                  </li>
+            </ul>
+            <!--end col-2 -->
+      </div>
+      <!--end row -->
+</div>

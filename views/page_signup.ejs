@@ -1,0 +1,71 @@
+<div class="mx-auto container row mt-3 d-flex justify-content-center" style="min-height: 480px;">
+      <div class=" col-md-6 col-sm-8 col-11 m-auto rounded pb-2 ">
+            <div class="bg-success bg-opacity-10 ps-1 rounded-3  ">
+                  <span class="badge bg-success bg-opacity-25 d-block text-center text-muted rounded">User
+                        Registration</span>
+                  <div class="mb-1  ">
+                        <span>Your Role: <span class="ms-2 fw-bold text-uppercase text-success">
+                                    <%=role%>
+                              </span></span>
+                  </div>
+                  <div class="mb-1 ">
+                        <span>Your Email: <span class="ms-2 fw-bold  text-success">
+                                    <%=email%>
+                              </span></span>
+                  </div>
+                  <div class="mb-1  ">
+                        <span>Your Team Leader: <span class="ms-2 fw-bold  text-success">
+                                    <%=added_by_name%>
+                              </span></span>
+                  </div>
+                  <div class="mb-1  ">
+                        <span>Your Designation: <span class="ms-2 fw-bold  text-success">
+                                    <%=designation%>
+                              </span></span>
+                  </div>
+                  <%if(typeof errors !=='undefined' ){%>
+                        <ul class="list-unstyled text-end pe-1">
+                              <%errors.map(err=>{%> <li class="text-danger text-wrap">
+                                          <%=err%>
+                                    </li>
+                                    <%})%>
+                        </ul>
+                        <%}%>
+            </div>
+            <form action="/auth/register" method="POST" class="">
+                  <div class=" form-group my-2">
+                        <label for="name" class=" ">Full Name</label>
+                        <input type="name" name="name" required style="height: 32px;"
+                              class="fw-bold bg-secondary bg-opacity-10 border-success  form-control rounded-3  border-0 text-center"
+                              placeholder="Your Name" value="<%= typeof name != 'undefined' ? name : 'masumkhan' %>" />
+                  </div>
+                  <input style="display: none;" type="text" name="added_by" value="<%=added_by%>" />
+                  <input style="display: none;" type="email" name="email" value="<%=email%>" />
+                  <input style="display: none;" type="text" name="role" value="<%=role%>" />
+                  <input style="display: none;" type="text" name="designation" value="<%=designation%>" />
+                  <div class="form-group text-start mb-3">
+                        <label for="email2">Secondary Email (optional)</label>
+                        <input type="email" name="email2" style="height: 32px;"
+                              class="form-control fw-bold bg-secondary bg-opacity-10  border-0 text-center"
+                              placeholder="Enter Email" value="" />
+                  </div>
+                  <div class="form-group text-start mb-2">
+                        <label for="password ">Password</label>
+                        <input type="password " name="password" style="height: 32px;" required
+                              class="form-control  fw-bold bg-secondary bg-opacity-10  border-0 text-center"
+                              placeholder="Password ?"
+                              value="<%= typeof password != 'undefined' ? password : 'p123456' %>" />
+                  </div>
+                  <div class="form-group text-start mb-2">
+                        <label for="confirmpassword ">Confirm Password</label>
+                        <input type="password " name="confirmpassword" style="height: 32px;" required
+                              class="form-control  fw-bold bg-secondary bg-opacity-10  border-0 text-center"
+                              placeholder="Password again ... "
+                              value="<%= typeof password2 != 'undefined' ? password2 : 'p123456' %>" />
+                  </div>
+                  <button type="submit "
+                        class="btn btn-sm fw-bold bg-success bg-opacity-50 mt-2 rounded w-50 float-end"> Register
+                  </button>
+            </form>
+      </div>
+</div>

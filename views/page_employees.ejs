@@ -1,0 +1,184 @@
+<div class="container mt-4" style="min-height: 480px;">
+      <div class="d-flex justify-content-between">
+            <span class="badge text-dark py-0">
+                  <%=data_title%>
+            </span>
+            <span class="ms-5 fw-bold text-primary  " style="min-width: 200px;" id="id_msg">
+                  <%=msg%>
+            </span>
+            <%-include('modal_adduser')%>
+                  <%-include('modal_addtask')%>
+                        <% if(role=="admin" ){%> <button onclick="show_modal_adduser(`team-leader`)" id="id-user-add"
+                                    class="rounded-5 btn btn-sm bg-success bg-opacity-50 text-dark badge "><i
+                                          class="fa fa-plus-circle me-1"></i> Team-Leader </button>
+                              <%}%>
+                                    <% if(role=="team-leader" ){%>
+                                          <button onclick="show_modal_adduser(`team-member`)" id="id-user-add"
+                                                class="rounded-5 btn btn-sm bg-success bg-opacity-50 text-dark badge "><i
+                                                      class="fa fa-plus-circle me-1"></i> Team-Member </button>
+                                          <%}%>
+      </div>
+      <div style="min-height: 400px;">
+            <table class="table "
+                  style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+                  <thead class="thead-dark">
+                        <tr style="font-size: medium;">
+                              <th scope="col  ">#</th>
+                              <th scope="col ">Name</th>
+                              <th scope="col">Email</th>
+                              <th scope="col">Designation</th>
+                              <th scope="col">Action</th>
+                              <th scope="col">Action</th>
+                              <th scope="col">Action</th>
+                        </tr>
+                  </thead>
+                  <tbody style="font-size: 12px;" class=" bg-success bg-opacity-10">
+                        <% if(typeof data !=='undefined' ){ for(let i=0;i<data.length;i++){ %>
+                              <tr style="max-height: 24px;">
+                                    <th scope="row">
+                                          <%=i+1%>
+                                    </th>
+                                    <td>
+                                          <%=data[i].name%>
+                                    </td>
+                                    <td>
+                                          <%=data[i].email %>
+                                    </td>
+                                    <td>
+                                          <%=data[i].designation %>
+                                    </td>
+                                    <td> <button onclick="show_modal_addtask(`<%=name %>`,`<%=designation %>`,`<%=data[i].id %>`,`<%=data[i].name%>`,`<%=data[i].designation %>`)"
+                                                class="bg-info bg-opacity-25 btn btn-sm py-0">Assign new task</button>
+                                    </td>
+                                    <td> <a href="/tasks/assigned-tasks/<%=data[i].id%>" class="text-decoration-none"><i
+                                                      class="fa-solid fa-list-ol me-1"></i>Assigned Tasks</a></td>
+                                    <td> <button onclick="show_dlt_modal(`<%=data[i].id%>`)"
+                                                class="btn btn-sm text-danger"><i
+                                                      class="fa-solid fa-trash me-1"></i>Remove</button></td>
+                              </tr>
+                              <% } %>
+                                    <% }%>
+                  </tbody>
+            </table>
+      </div>
+      <div class="d-flex gap-5 mt-1  " style=" height: 30px;">
+            <form id="employee_pagenumbform" action="/tasks/assigned-tasks/" method="get"> <button onclick="pageDown()"
+                        class="border-0 py-0  bg-success bg-opacity-50  ">Page-=1</button>
+                  <input id="employee_pagenumb" style="width: 45px;" onchange="pageNumbSubmit()" name="pagenumb"
+                        class=" border-0 text-center fw-bold bg-success bg-opacity-25 " value=<%=skip / limit + 1%> >
+                  <button onclick="pageUp()" class="py-0 border-0 bg-success bg-opacity-50 ">Page+=1 </button>
+            </form>
+            <span class=" text-black-75 d-block text-start   ms-1">
+                  <span class="fw-bold text-dark border-1 border-success">Total</span>
+                  <%=Math.ceil(count /limit)%> Pages, <%=count%> Persons
+            </span>
+      </div>
+      <div id="dlt-modal-user" class="modal mt-5 rounded  ">
+            <div class="modal-dialog " role="document ">
+                  <div class="modal-content bg-light">
+                        <div class="modal-body py-4 rounded-3 bg-info bg-opacity-10">
+                              <div class="modal-body py-4 rounded-3">
+                                    <form action="/employees/remove" method="DELETE">
+                                          <input type="hidden" id="dlt_user_pagenumb" name="pagenumb" value=<%=skip /
+                                                limit + 1%> > <input hidden type="text" id="dlt_userid" value=""
+                                                name="employeeid" />
+                                          <span
+                                                class="shadow-sm badge bg-secondary bg-opacity-75 text-warning d-block mb-4 pb-1 text-center">Sure
+                                                About Deletion ? </span>
+                                          <button type="submit"
+                                                class=" mb-3 btn btn-sm btn-danger w-25 rounded ">Delete</button>
+                                    </form>
+                                    <button onclick="document.getElementById('dlt-modal-user').style.display='none'"
+                                          class="mt-0 fw-bold fst-italic btn btn-sm shadow-sm w-25 rounded float-start  border-success  ">
+                                          Cancel </button>
+                              </div>
+                        </div>
+                  </div>
+            </div>
+      </div>
+      <script>
+            function show_modal_addtask(by_name, by_designation, to_id, to_name, to_designation) {
+                  const d = new Date();
+
+                  document.getElementById('add-modal-task').style.display = 'block';
+                  document.getElementById('id_to_id').value = to_id;
+                  document.getElementById('id_to_name').value = to_name + ", " + to_designation + "";
+                  document.getElementById('id_by_name').value = by_name + ", " + by_designation + "";
+                  document.getElementById("id_assign_time").value = d.getDate() + "-" + Number(d.getMonth() + 1) + "-"
+                        + d.getFullYear() + " : " + d.getHours() + ":" + d.getMinutes();
+            }
+            function pageNumbSubmit() {
+                  //   && Number.isNaN(numb) == false
+                  let numb = document.getElementById('employee_pagenumb').value
+                  let elmnt = document.getElementById('employee_pagenumb')
+                  if (numb > 0 && Number.isNaN(numb) == false) {
+                        document.getElementById("employee_pagenumbform").submit();
+                  }
+                  else {
+                        elmnt.value = 1;
+                        document.getElementById("employee_pagenumbform").submit();
+                  }
+            }
+            function pageUp() {
+                  document.getElementById('employee_pagenumb').value = Number(document.getElementById('employee_pagenumb').value) + 1
+            }
+            function pageDown() {
+                  if (document.getElementById('employee_pagenumb').value > 1) {
+                        document.getElementById('employee_pagenumb').value = Number(document.getElementById('employee_pagenumb').value) - 1
+                  }
+            }
+            function show_modal_adduser(defined_role) {
+                  document.getElementById('add-modal-user').style.display = 'block'
+                  document.getElementById('defined_role_value').value = defined_role;
+                  document.getElementById('defined_role_text').innerText = defined_role;
+
+            }
+            setTimeout(() => {
+                  const idmsg = "id_msg";
+                  document.getElementById(idmsg).innerHTML = " "
+            }, 3000)
+
+            function show_dlt_modal(userid) {
+                  document.getElementById("dlt_userid").value = userid
+                  document.getElementById('dlt-modal-user').style.display = 'block'
+            }
+            function check_submit() {
+                  const role = document.getElementById("id_selectedrole").value;
+                  const email = document.getElementById("id_adduser_email").value;
+                  console.log(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) + "   <><> " + email);
+                  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) == false) {
+                        document.getElementById("id_msg_adduser").innerText = "Invalid email !"
+                  }
+                  else if (role == 'none') {
+                        document.getElementById("id_msg_adduser").innerText = "select a role plz"
+
+                  } else {
+                        document.getElementById("id_form_adduser").submit();
+                  } setTimeout(() => {
+                        document.getElementById("id_msg_adduser").innerText = ""
+                  }, 3000);
+
+            }
+
+            window.onclick = function (event) {
+                  let addmodal = document.getElementById('add-modal-user');
+                  let modal2 = document.getElementById('add-modal-task')
+                  let modal3 = document.getElementById('dlt-modal')
+                  let editmodal = document.getElementById('edit-modal-user');
+
+                  if (event.target == editmodal) {
+                        editmodal.style.display = "none ";
+                  }
+                  if (event.target == addmodal) {
+                        addmodal.style.display = "none ";
+                  }
+                  if (event.target == modal2) {
+                        modal2.style.display = "none ";
+                  }
+                  if (event.target == modal3) {
+                        modal3.style.display = "none ";
+                  }
+            }
+
+      </script>
+</div>

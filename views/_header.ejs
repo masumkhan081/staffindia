@@ -1,0 +1,102 @@
+<div style="background-color: rgb(84, 139, 113)" background-image: linear-gradient(to right, rgba(255,0,0,0),
+      rgba(255,0,0,1)); class="container-fluid d-flex justify-content-between shadow-sm bg-gradient ">
+      <div class="d-flex flex-column">
+            <a href="/" class="text-decoration-none "><span class="fw-bold fs-5 text-dark "><i
+                              class="fa-solid fa-list-check me-1 text-warning"></i>Tasks Distribution</span></a>
+            <% if(auth_status=="logged-in" ){ %><span><button onclick="show_modal_editProfile()"
+                              class="btn btn-sm text-dark " data-toggle="tooltip" data-placement="bottom"
+                              title="Click To Edit Profile Info"><i class="fa-solid fa-user-pen mb-1"></i></button>
+                        <%=name%>(<%=role%>)
+                  </span>
+                  <% } %>
+      </div>
+      <ul class="d-flex flex-wrap justify-content-end pe-5 list-unstyled gap-2 align-content-end ">
+            <% if(auth_status=="logged-in" ){ %>
+                  <% if(role=="team-leader" ){%>
+                        <li><a href="/user/my-team"
+                                    class="text-decoration-none text-light text-opacity-75 shadow-sm py-1 px-3 rounded-pill fst-italic">Doer
+                                    (my-team)</a></li>
+                        <li><a href="/tasks/allocated-tasks"
+                                    class="text-decoration-none text-light text-opacity-75 shadow-sm py-1 px-3 rounded-pill fst-italic">Distributed
+                                    Tasks</a></li>
+                        <li><a href="/tasks/my-tasks"
+                                    class="text-decoration-none text-light text-opacity-75 shadow-sm py-1 px-3 rounded-pill fst-italic">My-Tasks</a>
+                        </li>
+                        <% }else if(role=="team-member" ){%>
+                              <li><a href="/tasks/my-tasks"
+                                          class="text-decoration-none text-light text-opacity-75 shadow-sm py-1 px-3 rounded-pill fst-italic">My-Tasks</a>
+                              </li>
+                              <%} else if( role=="admin" ){%>
+                                    <li><a href="/tasks/allocated-tasks"
+                                                class="text-decoration-none text-light text-opacity-75 shadow-sm py-1 px-3 rounded-pill fst-italic">Allocated-Tasks</a>
+                                    </li>
+                                    <li><a href="/user/team-leaders"
+                                                class="text-decoration-none text-light text-opacity-75 shadow-sm py-1 px-3 rounded-pill fst-italic">Team-Leaders</a>
+                                    </li>
+                                    <%}%>
+                                          <li><a href="/auth/signout"
+                                                      class="text-decoration-none text-light text-opacity-75 shadow-sm py-1 px-3 rounded-pill fst-italic">Logout</a>
+                                          </li>
+                                          <%}else{ %>
+                                                <li class="mt-2"><a href="/auth/signin"
+                                                            class=" text-decoration-none text-light text-opacity-75 shadow-sm py-1 px-3 rounded-pill fst-italic">Log
+                                                            In</a></li>
+                                                <%} %>
+      </ul>
+      <!--  -->
+      <!--  -->
+      <!--  -->
+      <div id="edit-modal-user" class="modal mt-4 rounded  ">
+            <div class="modal-dialog " role="document ">
+                  <div class="modal-content bg-light">
+                        <div class="modal-body rounded-3  bg-success bg-opacity-10">
+                              <span class="mark text-danger fw-bold">Not Yet Implemented/ Functional</span>
+                              <form action="/auth/profile" method="post">
+                                    <div class=" form-group my-3">
+                                          <label for="name" class=" ">Full Name</label>
+                                          <input type="name" name="name" required style="height: 32px;"
+                                                class="fw-bold bg-secondary bg-opacity-10 border-success  form-control rounded-3  border-0 text-center"
+                                                placeholder="Your Name"
+                                                value="<%= typeof name != 'undefined' ? name : '' %>" />
+                                    </div>
+                                    <div class="form-group text-start mb-3">
+                                          <label for="sec_email ">Secondary Email</label>
+                                          <input type="email " name="sec_email" style="height: 32px;" required
+                                                class="form-control  fw-bold bg-secondary bg-opacity-10  border-0 text-center"
+                                                value="" />
+                                    </div>
+                                    <div class="form-group text-start mb-3">
+                                          <label for="password ">Old Password</label>
+                                          <input type="password " name="password" style="height: 32px;" required
+                                                class="form-control  fw-bold bg-secondary bg-opacity-10  border-0 text-center"
+                                                value="" />
+                                    </div>
+                                    <div class="form-group text-start mb-3">
+                                          <label for="password ">New Password</label>
+                                          <input type="password " name="password" style="height: 32px;" required
+                                                class="form-control  fw-bold bg-secondary bg-opacity-10  border-0 text-center"
+                                                value="" />
+                                    </div>
+                                    <div class="form-group text-start mb-3">
+                                          <label for="confirmpassword ">Confirm Changed Password</label>
+                                          <input type="password " name="confirmpassword" style="height: 32px;" required
+                                                class="form-control  fw-bold bg-secondary bg-opacity-10  border-0 text-center"
+                                                value="" />
+                                    </div>
+                              </form>
+                              <button onclick="document.getElementById('edit-modal-user').style.display='none'"
+                                    class="btn btn-sm bg-success bg-opacity-25 fw-bold w-75">Save Changes</button>
+                              <button onclick="document.getElementById('edit-modal-user').style.display='none'"
+                                    class="mt-3 fw-bold btn btn-sm bg-dark bg-opacity-25 w-75 rounded "> Cancel
+                              </button>
+                        </div>
+                  </div>
+            </div>
+      </div>
+      <script>
+            function show_modal_editProfile(sender_mail) {
+                  document.getElementById('edit-modal-user').style.display = 'block'
+            }
+
+      </script>
+</div>

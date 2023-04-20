@@ -1,24 +1,39 @@
-<div id="add-modal-user" class="modal mt-5 rounded  ">
+<div id="add-modal-user" class="modal mt-3 rounded  ">
   <div class="modal-dialog " role="document ">
     <div class="modal-content bg-light">
-      <div class="modal-body py-4 rounded-3  bg-success bg-opacity-10">
-        <span id="id_msg_adduser" class="float-end text-danger fw-bold"></span>
-        <form id="id_form_adduser" action="/employees/adduser" method="post">
-          <div class="mb-3">
-            <label for="email">Email</label> <br>
-            <input required id="id_adduser_email"  type="email"  name="email"
-            value="study.contents.of.masumkhan@gmail.com"
-              class=" form-control text text-center rounded-3 border-0  ">
+      <span class="badge w-100 text-center bg-success bg-opacity-50 text-dark rounded shadow-sm ">Send Mail With Defined
+        user-role, and designarion</span>
+      <div class="modal-body rounded-3  bg-success bg-opacity-10">
+        <form id="id_form_adduser" action="/user/invite" method="post">
+          <span class="badge text-success">Sender Email:</span><span id="id_sender_email"
+            class="w-100 text-center">masumkhan081.3s@gmail.com</span>
+          <div class="mb-3 mt-2">
+            <label for="email" class="fw-bold">Email (To)</label> <br>
+            <input required style="max-height: 30px;" id="id_adduser_email" type="email" name="to_mail"
+              value="study.contents.of.masumkhan@gmail.com" class=" form-control text text-center rounded-3 border-0  ">
           </div>
           <div class="mb-3">
-            <select class="form-select border-0" name="role" required id="id_selectedrole">
-              <option disabled   value="none">Select One Role</option>
-              <option value="task-creator">Task Creator</option>
-              <option selected value="employee">Just Employee</option>
-            </select>
+            <span class=" fw-bold text-success me-2">Role </span><span id="defined_role_text"
+              class="w-100 text-center"></span>
+            <input style="display: none;" id="defined_role_value" name="role" value="">
           </div>
+          <div class="form-group mb-3">
+            <label for="id_designation" class="fw-bold">Designation</label>
+            <input name="designation" required style="max-height: 30px;" class=" text-center form-control"
+              id="id_designation" value=""></input>
+          </div>
+          <div class="form-group mb-3">
+            <label for="id_subject" class="fw-bold">Mail Subj: (edit/ leave it)</label>
+            <input name="subject" style="max-height: 30px;" class=" text-center form-control" id="id_subject"
+              value="Signup @ Employee Task Controll"></input>
+          </div>
+          <div class="form-group mb-3">
+            <label for="id_mail_text" class="fw-bold">Mail Text (if any)</label>
+            <textarea name="mail_text" class="form-control" id="id_mail_text"
+              rows="2">Happy to add u in our team</textarea>
+          </div><button onclick="" class="btn btn-sm bg-success bg-opacity-25 fw-bold w-75">Send Invitation
+            Mail</button>
         </form>
-        <button onclick="check_submit()" class="btn btn-sm bg-success bg-opacity-25 fw-bold w-75">Send Invitation Mail</button>
         <button onclick="document.getElementById('add-modal-user').style.display='none'"
           class="mt-3 fw-bold fst-italic btn btn-sm bg-dark bg-opacity-25 w-75 rounded "> Cancel </button>
       </div>

@@ -1,25 +1,32 @@
 <div id="add-modal-task" class="modal mt-5 rounded  ">
   <div class="modal-dialog " role="document ">
     <div class="modal-content bg-light">
-      <div class="modal-body py-4 rounded-3  bg-info bg-opacity-10">
-        <form action="tasks/add" method="post">
-          <div class="mb-3" aria-disabled="true">
-            <span class="mark text-dark">Assigned Employee:</span><span id="id_assign_to" class="badge text-dark">
-            </span>
+      <div class="modal-body py-4 rounded-3 bg-info bg-opacity-10">
+        <form action="/tasks/add" method="post">
+          <div class="mb-3 " aria-disabled="true">
+            <span class="text-dark">Assigned To:</span>
+            <input type="text" id="id_to_name" name="to_name" readonly value=""
+              class="text-center rounded-pill bg-info bg-opacity-10  border-0">
           </div>
-          <input style="display: none;" type="text" name="to" value=""
+          <div class="mb-3 " aria-disabled="true">
+            <span class="text-dark">Assigned By:</span>
+            <input type="text" id="id_by_name" readonly name="by_name" value=""
+              class="text-center rounded-pill bg-info bg-opacity-10  border-0">
+          </div>
+          <input style="display: none;" type="text" id="id_to_id" name="to_id" value=""
             class=" text-success text-center rounded-3 border-0">
           <div class="mb-2">
             <label for="taskname">Task Name</label> <br>
-            <input type="text" required name="taskname" value="tn" class="w-75 text text-center rounded-3 border-0">
+            <input type="text" required name="task_name" value="tn" class="w-75 text text-center rounded-3 border-0">
           </div>
           <div class="mb-2">
-            <label for="assigntime">Assign Time</label> <br>
-            <input type="text" name="date" value="at" class=" w-75 text text-center rounded-3 border-0 ">
+            <label for="assigntime">Assign Time (dd-mm-yy hh:mm)</label> <br>
+            <input type="text" id="id_assign_time" name="assign_time" value="at"
+              class=" w-75 text text-center rounded-3 border-0 ">
           </div>
           <div class="mb-2">
             <label for="duetime">Due Time</label> <br>
-            <input type="text" name="duedate" value="dt" class="w-75 text text-center rounded-3 border-0">
+            <input type="text" name="due_time" value="dt" class="w-75 text text-center rounded-3 border-0">
           </div>
           <div class="mb-4">
             <label for="detail">Detail</label> <br>
